@@ -1,0 +1,999 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Revcircle - We Don't Bill. We Engage.</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="css/vertical_scroll.css">
+    <link rel="stylesheet" type="text/css" href="css/gradient.css">
+    <style>
+        :root {
+            --primary: #1a1f2e;
+            --secondary: #2d3748;
+            --accent: #6366f1;
+            --accent-light: #818cf8;
+            --text: #e2e8f0;
+            --text-light: #cbd5e0;
+            --highlight: #8b5cf6;
+        }
+        
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+        }
+        
+        body {
+            font-family: 'Montserrat', sans-serif;
+            background-color: var(--primary);
+            color: var(--text);
+        }
+        
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Inter', sans-serif;
+        }
+        
+        .gradient-text {
+            background: linear-gradient(90deg, var(--accent), var(--highlight));
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .gradient-border {
+            position: relative;
+        }
+        
+        .gradient-border::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, var(--accent), var(--highlight));
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.3s ease;
+        }
+        
+        .gradient-border:hover::after {
+            transform: scaleX(1);
+        }
+        
+        .card {
+            background-color: var(--secondary);
+            border-radius: 0.75rem;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+            border-color: rgba(99, 102, 241, 0.3);
+        }
+        
+        .btn-primary {
+            background: linear-gradient(135deg, var(--accent), var(--highlight));
+            color: white;
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            border: none;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+        
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, var(--highlight), var(--accent));
+            transition: all 0.4s ease;
+            z-index: -1;
+        }
+        
+        .btn-primary:hover::before {
+            left: 0;
+        }
+        
+        .btn-secondary {
+            background: transparent;
+            color: var(--text);
+            font-weight: 600;
+            padding: 0.75rem 1.5rem;
+            border-radius: 0.5rem;
+            transition: all 0.3s ease;
+            border: 1px solid var(--accent);
+        }
+        
+        .btn-secondary:hover {
+            background-color: rgba(99, 102, 241, 0.1);
+            transform: translateY(-2px);
+        }
+        
+        .animate-float {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        .animate-pulse-slow {
+            animation: pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+        
+        @keyframes pulse {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.7; }
+        }
+        
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+        
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        .navbar {
+            backdrop-filter: blur(10px);
+            background-color: rgba(26, 31, 46, 0.8);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .hero-pattern {
+            background-image: radial-gradient(rgba(99, 102, 241, 0.1) 2px, transparent 2px);
+            background-size: 30px 30px;
+        }
+        
+        .quote-card {
+            background: linear-gradient(135deg, rgba(99, 102, 241, 0.1), rgba(139, 92, 246, 0.1));
+            border-left: 4px solid var(--accent);
+        }
+        
+        .form-input {
+            background-color: rgba(45, 55, 72, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text);
+            transition: all 0.3s ease;
+        }
+        
+        .form-input:focus {
+            border-color: var(--accent);
+            box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+            outline: none;
+        }
+        
+        .form-label {
+            color: var(--text-light);
+            font-weight: 500;
+        }
+        
+        /* Custom animations */
+        .slide-in-left {
+            animation: slideInLeft 1s forwards;
+        }
+        
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .slide-in-right {
+            animation: slideInRight 1s forwards;
+        }
+        
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100px);
+                opacity: 0;
+            }
+            to {
+                transform: translateX(0);
+                opacity: 1;
+            }
+        }
+        
+        .fade-in-up {
+            animation: fadeInUp 1s forwards;
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                transform: translateY(30px);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        
+        .circle-pulse {
+            position: absolute;
+            border-radius: 50%;
+            background: radial-gradient(circle, var(--accent) 0%, transparent 70%);
+            opacity: 0.2;
+            animation: circlePulse 4s infinite;
+        }
+        
+        @keyframes circlePulse {
+            0% {
+                transform: scale(0.8);
+                opacity: 0.2;
+            }
+            50% {
+                transform: scale(1.2);
+                opacity: 0.4;
+            }
+            100% {
+                transform: scale(0.8);
+                opacity: 0.2;
+            }
+        }
+        
+        .typing-cursor {
+            display: inline-block;
+            width: 3px;
+            height: 1em;
+            background-color: var(--accent);
+            margin-left: 2px;
+            animation: blink 1s infinite;
+            vertical-align: middle;
+        }
+        
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        .glow {
+            box-shadow: 0 0 15px rgba(99, 102, 241, 0.5);
+            animation: glow 2s infinite alternate;
+        }
+        
+        @keyframes glow {
+            from { box-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
+            to { box-shadow: 0 0 20px rgba(139, 92, 246, 0.8); }
+        }
+        
+        @keyframes spin-slow {
+            from { transform: rotate(0deg); }
+            to { transform: rotate(360deg); }
+        }
+        
+        .animate-spin-slow {
+            animation: spin-slow 20s linear infinite;
+        }
+        @media (max-width: 768px) {
+            .hero-fade-overlay {
+            display: none !important; /* Hide fade overlay on mobile */
+        }
+        }
+        @media (min-width: 769px) {
+            .hero-fade-overlay {
+            display: block;
+            background: linear-gradient(to right, #1a1f2e 16%, rgba(26,31,46,0.0) 100%);
+        }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar fixed w-full z-50 py-4">
+        <div class="container mx-auto px-4 md:px-6 flex justify-between items-center">
+            <a href="#" class="flex items-center">
+                <!-- <span class="text-2xl font-bold gradient-text">Revcircle</span> -->
+                <img src="RevCircle.svg" alt="RevCircle" class="h-10 w-auto">
+            </a>
+            
+            <div class="hidden md:flex space-x-8">
+                <a href="#what-we-do" class="gradient-border text-sm font-medium hover:text-white transition-colors">What We Do</a>
+                <a href="#field-kit" class="gradient-border text-sm font-medium hover:text-white transition-colors">Field Kit</a>
+                <a href="#people" class="gradient-border text-sm font-medium hover:text-white transition-colors">People First</a>
+                <a href="#careers" class="gradient-border text-sm font-medium hover:text-white transition-colors">Careers</a>
+                <a href="#contact" class="gradient-border text-sm font-medium hover:text-white transition-colors">Contact</a>
+            </div>
+            
+            <button id="mobile-menu-button" class="md:hidden text-white focus:outline-none">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+                </svg>
+            </button>
+        </div>
+        
+        <!-- Mobile menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-gray-900 bg-opacity-95 absolute w-full">
+            <div class="container mx-auto px-4 py-4 space-y-4">
+                <a href="#what-we-do" class="block text-sm font-medium hover:text-white transition-colors">What We Do</a>
+                <a href="#field-kit" class="block text-sm font-medium hover:text-white transition-colors">Field Kit</a>
+                <a href="#people" class="block text-sm font-medium hover:text-white transition-colors">People First</a>
+                <a href="#careers" class="block text-sm font-medium hover:text-white transition-colors">Careers</a>
+                <a href="#contact" class="block text-sm font-medium hover:text-white transition-colors">Contact</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+<section class="hero-pattern min-h-screen flex items-center pt-20 pb-16 relative overflow-hidden">
+    <!-- Optimized Video Background: Hide video & fade on mobile, show static bg instead -->
+    <div class="absolute inset-0 z-0 pointer-events-none">
+        <div class="relative w-full h-full">
+            <!-- Video only on md+ screens -->
+            <video class="hidden md:block w-full h-full object-cover opacity-70" autoplay muted loop playsinline poster="images/home_background_1.jpg">
+                <source src="video/video_bg.mp4" type="video/mp4" />
+                <!-- fallback content for screen readers -->
+            </video>
+            <!-- Static background for mobile -->
+            <div 
+                class="block md:hidden w-full h-full bg-primary" 
+                style="
+                    background-image: linear-gradient(rgba(26,31,46,0.7), rgba(26,31,46,0.7)), url('images/mobile_bg.jpg');
+                    background-size: cover;
+                    background-position: right center;
+                    background-repeat: no-repeat;
+                ">
+            </div>
+            <!-- Fade overlay only on md+ screens -->
+            <div class="absolute inset-0 pointer-events-none hero-fade-overlay hidden md:block"></div>
+        </div>
+    </div>
+    <div class="container mx-auto px-4 md:px-6 relative z-10">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="text-center lg:text-left">
+                <h1 class="text-2xl md:text-4xl font-bold mb-8">
+                    We Don't Bill. We Engage.
+                </h1>
+                <br>
+                <div>
+                    <p class="text-xl md:text-2xl font-medium mb-4">Responsibility. Accountability. Reinvention.</p><br>
+                    <p class="text-2xl md:text-3xl font-bold mb-8">We're Not Just Another Billing Company - We're a Force</p>
+                </div><br><br>
+                <div class="flex flex-col md:flex-row justify-center lg:justify-start gap-4">
+                    <a href="#what-we-do" class="btn-primary">
+                        Discover Our Approach
+                    </a>
+                    <a href="#contact" class="btn-secondary">
+                        Get Your Assessment
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 14l-7 7m0 0l-7-7m7 7V3"></path>
+        </svg>
+    </div>
+</section>
+
+<!-- <div id="grid-overlay-wrapper">
+  <div class="grid-overlay"></div> -->
+
+    <!-- What We Do Section -->
+    <section id="what-we-do" class="py-20 bg-gradient-to-b from-primary to-secondary">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">What We Do</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-accent to-highlight mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 reveal">
+                <div class="card p-6 h-full">
+                    <div class="h-16 w-16 rounded-full bg-accent bg-opacity-20 flex items-center justify-center mb-6 mx-auto">
+                        <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-center">Elite RCM Task Force</h3>
+                    <p class="text-center text-text-light">From eligibility to appeals - we deploy the right specialists at the right time. Trained to go deep, not wide. Fast, not rushed.</p>
+                </div>
+                
+                <div class="card p-6 h-full">
+                    <div class="h-16 w-16 rounded-full bg-accent bg-opacity-20 flex items-center justify-center mb-6 mx-auto">
+                        <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-center">Built for Scale. Powered by People.</h3>
+                    <p class="text-center text-text-light">Our offshore team operates like an embedded unit inside your practice - responsible, trained, and sharp.</p>
+                </div>
+                
+                <div class="card p-6 h-full">
+                    <div class="h-16 w-16 rounded-full bg-accent bg-opacity-20 flex items-center justify-center mb-6 mx-auto">
+                        <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-center">Automation Where It Counts</h3>
+                    <p class="text-center text-text-light">Robotic Process Automation (RPA) and AI tools enhance every workflow - no fluff, just systems that work smarter, faster, and cleaner.</p>
+                </div>
+                
+                <div class="card p-6 h-full">
+                    <div class="h-16 w-16 rounded-full bg-accent bg-opacity-20 flex items-center justify-center mb-6 mx-auto">
+                        <svg class="w-8 h-8 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold mb-4 text-center">Live Intel, Not Lagging Reports</h3>
+                    <p class="text-center text-text-light">You'll get real-time dashboards, red flag alerts, and weekly war-room reports that fuel actual decisions - not guesswork.</p>
+                </div>
+            </div>
+            <div class="relative container mx-auto px-4 md:px-6 mt-16 reveal">
+                <!-- Background image -->
+                <div class="absolute inset-0 z-0 pointer-events-none">
+                    <img src="images/what_we_do_mobile.png" alt="" class="w-full h-full object-cover opacity-20" />
+                </div>
+                <div class="relative z-10">
+                    <h3 class="text-2xl md:text-3xl font-bold mb-6">Mission-Ready. Stakes-High. Precision-Driven.</h3>
+                    <h2 class="text-3xl mb-4">You don't need a billing vendor.</h2>
+                    <div class="Iam">
+                        <p class="text-lg md:text-2xl">
+                            You need an elite <br class="block sm:hidden">RCM force
+                        </p>
+                        <b>
+                            <div class="innerIam">
+                                Disciplined.<br /> 
+                                Adaptable.<br />
+                                Cost-Effective.<br />
+                                Strategic.<br />
+                                Mission-Driven.<br />
+                            </div>
+                        </b>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Field Kit Section -->
+    <section id="field-kit" class="py-20 bg-primary relative overflow-hidden">
+        <div class="absolute top-0 right-0 w-1/2 h-full opacity-5">
+            <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full">
+                <path fill="#6366F1" d="M47.7,-57.2C59.9,-45.7,67.2,-28.7,69.2,-11.1C71.1,6.5,67.8,24.8,57.9,38.2C48,51.7,31.6,60.4,13.5,65.2C-4.6,70,-24.4,70.9,-39.4,62.3C-54.4,53.7,-64.6,35.7,-70.3,15.8C-76,-4.1,-77.2,-25.9,-67.8,-40.8C-58.4,-55.7,-38.4,-63.8,-19.9,-65.7C-1.4,-67.6,15.6,-63.4,31.5,-60.1C47.4,-56.8,62.2,-54.4,73.1,-44.9C84,-35.5,90,-18.7,87.8,-3.2C85.5,12.3,75,25.7,64.1,37.1" transform="translate(100 100)" />
+            </svg>
+        </div>
+        
+        <div class="container mx-auto px-4 md:px-6 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Your Field Kit Includes:</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-accent to-highlight mx-auto"></div>
+            </div>
+            
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 reveal">
+                <div class="card p-8 transform transition-all hover:scale-105">
+                    <h3 class="text-2xl font-bold mb-4 gradient-text">Full-Scope RCM Services</h3>
+                    <p class="mb-4">Clean claim submission. AR takedown. Denial reversal. Compliance assurance.</p>
+                    <div class="w-16 h-1 bg-accent mb-6"></div>
+                    <div class="flex items-center">
+                        <svg class="w-10 h-10 text-accent mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <p class="text-lg">End-to-end revenue cycle management</p>
+                    </div>
+                </div>
+                
+                <div class="card p-8 transform transition-all hover:scale-105">
+                    <h3 class="text-2xl font-bold mb-4 gradient-text">Specialty-Grade Operators</h3>
+                    <p class="mb-4">Orthopedics. Radiology. Interventional complexity.</p>
+                    <p class="mb-4">We thrive in the domains where most billing firms fold.</p>
+                    <div class="w-16 h-1 bg-accent mb-6"></div>
+                    <div class="flex items-center">
+                        <svg class="w-10 h-10 text-accent mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                        </svg>
+                        <p class="text-lg">Specialized expertise for complex specialties</p>
+                    </div>
+                </div>
+                
+                <div class="card p-8 transform transition-all hover:scale-105">
+                    <h3 class="text-2xl font-bold mb-4 gradient-text">Fractional Cost. Full Commitment.</h3>
+                    <p class="mb-4">For less than the cost of one in-house staffer, you get a fully staffed, mission-focused team.</p>
+                    <div class="w-16 h-1 bg-accent mb-6"></div>
+                    <div class="flex items-center">
+                        <svg class="w-10 h-10 text-accent mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                        <p class="text-lg">Cost-effective without compromising quality</p>
+                    </div>
+                </div>
+                
+                <div class="card p-8 transform transition-all hover:scale-105">
+                    <h3 class="text-2xl font-bold mb-4 gradient-text">Agile Resource Deployment</h3>
+                    <p class="mb-4">Scale when you need. Reassign with ease. Our team moves with you—not against you.</p>
+                    <div class="w-16 h-1 bg-accent mb-6"></div>
+                    <div class="flex items-center">
+                        <svg class="w-10 h-10 text-accent mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                        </svg>
+                        <p class="text-lg">Flexible scaling to match your needs</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- People First Section -->
+    <section id="people" class="py-20 bg-gradient-to-b from-secondary to-primary">
+        <div class="gradient-background">
+        <div class="glow"></div>
+        <div class="grid-overlay"></div>
+        <div class="particles-container" id="particles-container"></div>
+    </div>
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="max-w-4xl mx-auto text-center reveal">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">People First. Always.</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-accent to-highlight mx-auto mb-8"></div>
+                
+                <div class="mb-12">
+                    <p class="text-xl mb-4">Revcircle isn't run from the top. It's powered from the inside.</p>
+                    <p class="text-xl mb-4">We hire with intent, train like it matters, and treat every person like they own the outcome.</p>
+                    <p class="text-xl font-bold mb-4">That's because they do.</p>
+                    <p class="text-xl mb-4">Our staff doesn't work for us—they are us.</p>
+                    <p class="text-xl font-bold">We build leaders, not workers.</p>
+                </div>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mt-16">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-accent to-highlight opacity-20 rounded-full animate-pulse-slow"></div>
+                        <div class="relative z-10 flex flex-col items-center">
+                            <svg class="w-16 h-16 text-accent mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z"></path>
+                            </svg>
+                            <h3 class="text-xl font-bold mb-2">Empowered Teams</h3>
+                            <p class="text-center text-text-light">Our people are given real responsibility and authority to make decisions.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-accent to-highlight opacity-20 rounded-full animate-pulse-slow" style="animation-delay: 1s;"></div>
+                        <div class="relative z-10 flex flex-col items-center">
+                            <svg class="w-16 h-16 text-accent mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19.428 15.428a2 2 0 00-1.022-.547l-2.387-.477a6 6 0 00-3.86.517l-.318.158a6 6 0 01-3.86.517L6.05 15.21a2 2 0 00-1.806.547M8 4h8l-1 1v5.172a2 2 0 00.586 1.414l5 5c1.26 1.26.367 3.414-1.415 3.414H4.828c-1.782 0-2.674-2.154-1.414-3.414l5-5A2 2 0 009 10.172V5L8 4z"></path>
+                        </svg>
+                            <h3 class="text-xl font-bold mb-2">Continuous Learning</h3>
+                            <p class="text-center text-text-light">We invest heavily in training and development for every team member.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-gradient-to-br from-accent to-highlight opacity-20 rounded-full animate-pulse-slow" style="animation-delay: 2s;"></div>
+                        <div class="relative z-10 flex flex-col items-center">
+                            <svg class="w-16 h-16 text-accent mb-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path>
+                            </svg>
+                            <h3 class="text-xl font-bold mb-2">Growth Mindset</h3>
+                            <p class="text-center text-text-light">We foster an environment where challenges are opportunities to excel.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Careers Section -->
+    <section id="careers" class="py-20 bg-primary relative overflow-hidden">
+        <div class="absolute bottom-0 left-0 w-full h-1/2 bg-gradient-to-t from-secondary to-transparent"></div>
+        
+        <div class="container mx-auto px-4 md:px-6 relative z-10">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+                <div class="reveal">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4">Careers at Revcircle</h2>
+                    <div class="w-24 h-1 bg-gradient-to-r from-accent to-highlight mb-8"></div>
+                    
+                    <div class="mb-8">
+                        <p class="text-xl mb-4">We don't hire for roles—we recruit for purpose.</p>
+                        <p class="text-xl mb-4">If you've got grit, hunger, and a mind built for solving—step up.</p>
+                        <p class="text-xl mb-4">At Revcircle, you'll learn the hard stuff, handle real responsibility, and grow with international exposure.</p>
+                    </div>
+                    
+                    <div class="flex flex-wrap gap-4">
+                        <a href="#" class="btn-primary">
+                            <span class="flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                </svg>
+                                View Jobs
+                            </span>
+                        </a>
+                        <a href="#" class="btn-secondary">
+                            <span class="flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path>
+                                </svg>
+                                Submit Resume
+                            </span>
+                        </a>
+                        <a href="#" class="btn-secondary">
+                            <span class="flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path>
+                                </svg>
+                                Explore Internships
+                            </span>
+                        </a>
+                    </div>
+                </div>
+                
+                <div class="reveal">
+                    <div class="card p-8 glow">
+                        <h3 class="text-2xl font-bold mb-4 gradient-text">Revcircle Academy</h3>
+                        <p class="text-xl mb-4">Training the Next Generation—For Free.</p>
+                        <p class="mb-4">We're building a no-cost school for medical billing.</p>
+                        <p class="mb-4">Not the basics—the deep stuff.</p>
+                        <p class="mb-4">Orthopedic codes. Surgical modifiers. Radiology protocols.</p>
+                        <p class="mb-4">We'll teach it all to driven individuals—no degree required.</p>
+                        <p class="font-bold mb-6">Because talent lives everywhere. Opportunity should too.</p>
+                        
+                        <a href="#" class="btn-primary inline-block">
+                            <span class="flex items-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.136 7.965l-2.898-.777M13.95 4.05l-2.122 2.122m-5.657 5.656l-2.12 2.122"></path>
+                                </svg>
+                                Learn More
+                            </span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Assessment Section -->
+    <section class="py-20 bg-gradient-to-b from-primary to-secondary">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="card p-8 md:p-12 reveal">
+                    <h2 class="text-3xl md:text-4xl font-bold mb-4 gradient-text">Free Revenue Assessment</h2>
+                    <p class="text-xl mb-6">Let's Find the Leaks. Then Plug Them.</p>
+                    
+                    <div class="mb-8">
+                        <p class="mb-4">We offer a no-obligation RCM audit of your practice.</p>
+                        <p class="mb-4">You'll get a tactical map of what's working, what's not, and how to fix it fast.</p>
+                        <p class="text-sm text-text-light mt-6">Includes denial trends, aging AR breakdown, compliance gaps, and payer friction points.</p>
+                    </div>
+                    
+                    <a href="#contact" class="btn-primary inline-block">
+                        <span class="flex items-center">
+                            <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path>
+                            </svg>
+                            Request Assessment
+                        </span>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Quote Section -->
+    <section class="py-20 bg-primary">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="max-w-4xl mx-auto">
+                <div class="quote-card p-8 md:p-12 reveal">
+                    <svg class="w-12 h-12 text-accent opacity-30 mb-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z" />
+                    </svg>
+                    
+                    <p class="text-xl md:text-2xl mb-6 italic">Every claim is a mission. Every denial is an enemy. Every resource is a soldier. We don't just process—we escalate, we adapt, we win.</p>
+                    
+                    <div class="flex items-center">
+                        <div class="w-12 h-12 rounded-full bg-accent bg-opacity-20 flex items-center justify-center mr-4">
+                            <span class="text-xl font-bold text-accent">AF</span>
+                        </div>
+                        <div>
+                            <p class="font-bold">Ahmed Umer Farooq</p>
+                            <p class="text-sm text-text-light">CEO, Revcircle</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-20 bg-gradient-to-b from-secondary to-primary relative overflow-hidden">
+        <div class="gradient-background">
+        <div class="gradient-sphere sphere-1"></div>
+        <div class="gradient-sphere sphere-2"></div>
+        <div class="gradient-sphere sphere-3"></div>
+        <div class="glow"></div>
+        <!-- <div class="grid-overlay"></div> -->
+        <div class="particles-container" id="particles-container"></div>
+    </div>
+        
+        <div class="circle-pulse w-96 h-96 bottom-1/4 right-1/4"></div>
+        <div class="circle-pulse w-64 h-64 top-1/4 left-1/4" style="animation-delay: 2s;"></div>
+        
+        <div class="container mx-auto px-4 md:px-6 relative z-10">
+            <div class="text-center mb-16 reveal">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Let's Talk</h2>
+                <div class="w-24 h-1 bg-gradient-to-r from-accent to-highlight mx-auto mb-8"></div>
+                <p class="text-xl mb-4">Book a strategy call with Revcircle's CEO Ahmed Umer Farooq or RCM expert Richard S.</p>
+                <p class="text-xl font-bold mb-4">Get your RCM battle plan. No strings. Just clarity.</p>
+            </div>
+            
+            <div class="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 reveal">
+                <div class="card p-8">
+                    <h3 class="text-2xl font-bold mb-6 gradient-text">Schedule Your Call</h3>
+                    
+                    <form id="contact-form" class="space-y-6">
+                        <div>
+                            <label for="name" class="form-label block mb-2">Full Name</label>
+                            <input type="text" id="name" class="form-input w-full px-4 py-3 rounded-lg" placeholder="Your name" required>
+                        </div>
+                        
+                        <div>
+                            <label for="email" class="form-label block mb-2">Email Address</label>
+                            <input type="email" id="email" class="form-input w-full px-4 py-3 rounded-lg" placeholder="your@email.com" required>
+                        </div>
+                        
+                        <div>
+                            <label for="phone" class="form-label block mb-2">Phone Number</label>
+                            <input type="tel" id="phone" class="form-input w-full px-4 py-3 rounded-lg" placeholder="(123) 456-7890">
+                        </div>
+                        
+                        <div>
+                            <label for="practice" class="form-label block mb-2">Practice Name</label>
+                            <input type="text" id="practice" class="form-input w-full px-4 py-3 rounded-lg" placeholder="Your practice name">
+                        </div>
+                        
+                        <div>
+                            <label for="specialty" class="form-label block mb-2">Medical Specialty</label>
+                            <select id="specialty" class="form-input w-full px-4 py-3 rounded-lg bg-secondary">
+                                <option value="" disabled selected>Select your specialty</option>
+                                <option value="orthopedics">Orthopedics</option>
+                                <option value="radiology">Radiology</option>
+                                <option value="cardiology">Cardiology</option>
+                                <option value="neurology">Neurology</option>
+                                <option value="primary-care">Primary Care</option>
+                                <option value="other">Other</option>
+                            </select>
+                        </div>
+                        
+                        <div>
+                            <label for="message" class="form-label block mb-2">Message (Optional)</label>
+                            <textarea id="message" rows="4" class="form-input w-full px-4 py-3 rounded-lg" placeholder="Tell us about your current RCM challenges..."></textarea>
+                        </div>
+                        
+                        <button type="submit" class="btn-primary w-full">
+                            <span class="flex items-center justify-center">
+                                <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                </svg>
+                                Schedule Your Call
+                            </span>
+                        </button>
+                    </form>
+                </div>
+                
+                <div class="flex flex-col justify-between">
+                    <div class="card p-8 mb-8">
+                        <h3 class="text-xl font-bold mb-4">Contact Information</h3>
+                        <div class="space-y-4">
+                            <div class="flex items-center">
+                                <svg class="w-6 h-6 text-accent mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path>
+                                </svg>
+                                <a href="mailto:info@revcircle.com" class="hover:text-accent transition-colors">info@revcircle.com</a>
+                            </div>
+                            <div class="flex items-center">
+                                <svg class="w-6 h-6 text-accent mr-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                                </svg>
+                                <p>Response within 24 hours</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="card p-8">
+                        <h3 class="text-xl font-bold mb-4">What Happens Next?</h3>
+                        <ol class="space-y-4">
+                            <li class="flex">
+                                <span class="flex-shrink-0 w-8 h-8 rounded-full bg-accent bg-opacity-20 flex items-center justify-center mr-4">1</span>
+                                <p>We'll contact you within 24 hours to confirm your call.</p>
+                            </li>
+                            <li class="flex">
+                                <span class="flex-shrink-0 w-8 h-8 rounded-full bg-accent bg-opacity-20 flex items-center justify-center mr-4">2</span>
+                                <p>You'll receive a brief questionnaire to help us prepare.</p>
+                            </li>
+                            <li class="flex">
+                                <span class="flex-shrink-0 w-8 h-8 rounded-full bg-accent bg-opacity-20 flex items-center justify-center mr-4">3</span>
+                                <p>We'll conduct a 30-minute strategy session focused on your needs.</p>
+                            </li>
+                            <li class="flex">
+                                <span class="flex-shrink-0 w-8 h-8 rounded-full bg-accent bg-opacity-20 flex items-center justify-center mr-4">4</span>
+                                <p>You'll receive a custom action plan within 48 hours.</p>
+                            </li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 bg-secondary">
+        <div class="container mx-auto px-4 md:px-6">
+            <div class="flex flex-col md:flex-row justify-between items-center mb-12">
+                <div class="mb-8 md:mb-0">
+                    <h2 class="text-2xl font-bold gradient-text mb-2">Revcircle</h2>
+                    <p class="text-text-light">People. Process. Precision. Powered by Purpose.</p>
+                </div>
+                
+                <div class="flex space-x-6">
+                    <a href="#" class="text-text-light hover:text-accent transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.313h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-text-light hover:text-accent transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+                        </svg>
+                    </a>
+                    <a href="#" class="text-text-light hover:text-accent transition-colors">
+                        <svg class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-700 pt-8">
+                <div class="flex flex-col md:flex-row justify-between items-center">
+                    <p class="text-sm text-text-light mb-4 md:mb-0">© 2025 Revcircle. All rights reserved.</p>
+                    <div class="flex flex-wrap justify-center gap-x-6 gap-y-2 text-sm text-text-light">
+                        <span>HIPAA Compliant</span>
+                        <span>|</span>
+                        <span>RCM + Automation</span>
+                        <span>|</span>
+                        <span>Built from Pakistan for the U.S.</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const targetId = this.getAttribute('href');
+                if (targetId === '#') return;
+                
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                    
+                    // Close mobile menu if open
+                    if (!mobileMenu.classList.contains('hidden')) {
+                        mobileMenu.classList.add('hidden');
+                    }
+                }
+            });
+        });
+        
+        // Reveal animations on scroll
+        const revealElements = document.querySelectorAll('.reveal');
+        
+        function checkReveal() {
+            const windowHeight = window.innerHeight;
+            const revealPoint = 150;
+            
+            revealElements.forEach(element => {
+                const elementTop = element.getBoundingClientRect().top;
+                
+                if (elementTop < windowHeight - revealPoint) {
+                    element.classList.add('active');
+                }
+            });
+        }
+        
+        window.addEventListener('scroll', checkReveal);
+        window.addEventListener('load', checkReveal);
+        
+        // Form submission handling
+        const contactForm = document.getElementById('contact-form');
+        
+        contactForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Get form values
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const phone = document.getElementById('phone').value;
+            const practice = document.getElementById('practice').value;
+            const specialty = document.getElementById('specialty').value;
+            const message = document.getElementById('message').value;
+            
+            // In a real implementation, you would send this data to your backend
+            // For demo purposes, we'll just show a success message
+            
+            // Create success message
+            const formContainer = contactForm.parentElement;
+            const successMessage = document.createElement('div');
+            successMessage.className = 'text-center py-12';
+            successMessage.innerHTML = `
+                <svg class="w-16 h-16 text-accent mx-auto mb-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                </svg>
+                <h3 class="text-2xl font-bold mb-4">Thank You, ${name}!</h3>
+                <p class="mb-6">We've received your request and will contact you within 24 hours to schedule your strategy call.</p>
+                <button id="reset-form" class="btn-secondary">Send Another Request</button>
+            `;
+            
+            // Hide form and show success message
+            contactForm.classList.add('hidden');
+            formContainer.appendChild(successMessage);
+            
+            // Add event listener to reset button
+            document.getElementById('reset-form').addEventListener('click', function() {
+                contactForm.reset();
+                contactForm.classList.remove('hidden');
+                formContainer.removeChild(successMessage);
+            });
+        });
+        
+        // Typing animation for hero text
+        function setupTypingAnimation() {
+            const typingElement = document.querySelector('.hero h2');
+            const originalText = typingElement.textContent;
+            typingElement.textContent = '';
+            
+            let i = 0;
+            const typingInterval = setInterval(() => {
+                if (i < originalText.length) {
+                    typingElement.textContent += originalText.charAt(i);
+                    i++;
+                } else {
+                    clearInterval(typingInterval);
+                    const cursor = document.createElement('span');
+                    cursor.className = 'typing-cursor';
+                    typingElement.appendChild(cursor);
+                }
+            }, 100);
+        }
+        
+        window.addEventListener('load', setupTypingAnimation);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'941dafa705e4fd84',t:'MTc0NzU5NTc1Ny4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script>
+<script src="js/gradient.js"></script>
+</body>
+</html>

@@ -1,0 +1,153 @@
+.Iam {
+  padding: 1em 1em;
+  font: normal 24px/32px Montserrat, sans-serif;
+  color: #999;
+}
+.Iam p {
+  height: 32px;
+  float: left;
+  margin-right: 0.3em;
+  font-size: 1rem;
+}
+.Iam b {
+  display: flex;
+  overflow: hidden;
+  position: relative;
+  height: 32px;
+  top: -5px;
+}
+.Iam .innerIam {
+  display: inline-block;
+  color: #3348bd;
+  position: relative;
+  white-space: nowrap;
+  top: 0;
+  left: 0;
+
+  /*animation*/
+  animation: move 5s;
+  animation-iteration-count: infinite;
+  animation-delay: 1.2s;
+}
+
+@media (max-width: 640px) {
+  .scroll-bg-mobile {
+    background-image: linear-gradient(rgba(26,31,46,0.90), rgba(26,31,46,0.90)), url('images/scroll_bg.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+}
+@keyframes move {
+  0% {
+    top: 0px;
+  }
+  20% {
+    top: -32px;
+  }
+  40% {
+    top: -64px;
+  }
+  60% {
+    top: -96px;
+  }
+  80% {
+    top: -128px;
+  }
+}
+
+@-webkit-keyframes move {
+  0% {
+    top: 0px;
+  }
+  20% {
+    top: -32px;
+  }
+  40% {
+    top: -64px;
+  }
+  60% {
+    top: -96px;
+  }
+  80% {
+    top: -128px;
+  }
+}
+@-moz-keyframes move {
+  0% {
+    top: 0px;
+  }
+  20% {
+    top: -32px;
+  }
+  40% {
+    top: -64px;
+  }
+  60% {
+    top: -96px;
+  }
+  80% {
+    top: -128px;
+  }
+}
+@-o-keyframes move {
+  0% {
+    top: 0px;
+  }
+  20% {
+    top: -32px;
+  }
+  40% {
+    top: -64px;
+  }
+  60% {
+    top: -96px;
+  }
+  80% {
+    top: -128px;
+  }
+}
+@keyframes move {
+  0% {
+    top: 0px;
+  }
+  20% {
+    top: -32px;
+  }
+  40% {
+    top: -64px;
+  }
+  60% {
+    top: -96px;
+  }
+  80% {
+    top: -128px;
+  }
+}
+
+/* Responsive adjustments for mobile */
+@media (min-width: 640px) {
+  .Iam {
+    padding: 2em 5em;
+    font: normal 40px/50px Montserrat, sans-serif;
+  }
+  .Iam p {
+    height: 50px;
+    font-size: 2rem;
+  }
+  .Iam b {
+    height: 50px;
+    top: -10px;
+  }
+  .Iam .innerIam {
+    font-size: 2rem;
+    line-height: 50px;
+  }
+  @keyframes move {
+    0% { top: 0px; }
+    20% { top: -50px; }
+    40% { top: -100px; }
+    60% { top: -150px; }
+    80% { top: -200px; }
+  }
+}
